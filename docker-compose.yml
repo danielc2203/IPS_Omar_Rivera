@@ -1,0 +1,39 @@
+# Despliegue del Sistema de Consentimientos en Docker (para VPS / Coolify)
+# Prueba primero contra certificamos.com.co; el sitio del hosting queda intacto.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      # La app lee config.php; estos valores se inyectan ahí por el entrypoint/config
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-consentimientos}
+      DB_USER: ${DB_USER:-consent_app}
+      DB_PASS: ${DB_PASS}
+      # Clave secreta del hash de firmas — DEBE ser la misma del sitio actual
+      APP_SECRET_KEY: ${APP_SECRET_KEY}
+    volumes:
+      - uploads:/var/www/html/assets/uploads
+      - backups:/var/www/html/admin/backups
+    ports:
+      - "8080:80"   # Coolify enruta el dominio a este puerto; ajustar según panel
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME:-consentimientos}
+      MARIADB_USER: ${DB_USER:-consent_app}
+      MARIADB_PASSWORD: ${DB_PASS}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS}
+    volumes:
+      - db_data:/var/lib/mysql
+      # Los .sql de esta carpeta se importan en la primera creación de la BD
+      - ./db-init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  db_data:
+  uploads:
+  backups:

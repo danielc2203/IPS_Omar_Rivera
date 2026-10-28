@@ -1,0 +1,11 @@
+.env.secret
+data-dump/
+db-init/
+app/assets/lib/tcpdf/
+app/assets/uploads/*
+app/admin/backups/*
+!app/assets/uploads/.gitkeep
+!app/admin/backups/.gitkeep
+*.sql
+*.sql.gz
+_extract/
