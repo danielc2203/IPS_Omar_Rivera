@@ -7,10 +7,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // --- CREDENCIALES ---
 define('DB_HOST', getenv('DB_HOST') ?: 'db');
-define('DB_USER', getenv('DB_USER') ?: 'u307614032_consentimiento');
-define('DB_PASS', getenv('DB_PASS') ?: 'Admin2admin&&');
-define('DB_NAME', getenv('DB_NAME') ?: 'u307614032_consentimiento');
-define('SECRET_KEY', getenv('APP_SECRET_KEY') ?: 'Tecco_Consent_2026_Secure_Key_$#');
+define('DB_USER', getenv('DB_USER') ?: 'consent_app');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'consentimientos');
+define('SECRET_KEY', getenv('APP_SECRET_KEY') ?: '');
 
 // 1. ZONA HORARIA PHP
 date_default_timezone_set('America/Bogota');
